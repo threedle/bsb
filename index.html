@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Best Segmentation Buddies</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/bsb_icon.ico">
+  <title>Best Segmentation Buddies</title>
+  <link href="style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+  <style>
+    /* from https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css */
+    @font-face {
+      font-family: 'Academicons';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.eot') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.ttf') format('truetype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.svg') format('svg');
+    }
+
+    .ai {
+      font-family: 'Academicons';
+      font-weight: 400;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+    }
+
+    .ai-arxiv:before {
+      content: "\e974";
+    }
+  </style>
+
+  <meta name="description" content="Best Segmentation Buddies for Image-Shape Correspondence">
+  <meta name="keywords" content="Correspondence, 3D Shape Analysis, Image Segmentation, Cross-Modality Correspondence, Cross-Domain Correspondence">
+
+  <meta property='og:title' content='Best Segmentation Buddies' />
+  <meta property='og:url' content='https://threedle.github.io/bsb/' />
+  <meta property='og:image' content='https://raw.githubusercontent.com/threedle/bsb/refs/heads/master/media/teaser.png' />
+  <meta property="og:type" content="website" />
+</head>
+
+<body>
+  <section class="intro" aria-label="intro">
+    <a href="https://3dl.cs.uchicago.edu" aria-label="3DL threedle home">
+      <div class="logobox">
+        <img src="assets/threedle_icon.png" alt="3DL threedle logo">
+      </div>
+    </a>
+    <div class="titlebox">
+      <h1>Best Segmentation<i class="med-nbsp" aria-hidden="true"></i>Buddies<wbr> for<i class="med-nbsp"
+          aria-hidden="true"></i>Image-Shape Correspondence</h1>
+    </div>
+    <nav>
+      <a target="_blank"
+        href="https://cvpr.thecvf.com/"
+        class="venue" aria-label="venue"><i class="icon fas fa-map-marker-alt" aria-hidden="true"></i>CVPR
+        2026</a>
+      <a target="_blank" href="https://cvpr.thecvf.com/"
+        aria-label="paper pdf">
+        <i class="icon fas fa-file-pdf"></i>Paper
+      </a>
+      <a target="_blank" href="http://arxiv.org/abs/2604.00000"><i class="icon ai ai-arxiv"></i>arXiv</a>
+      <a target="_blank" href="https://github.com/threedle/bsb/" aria-label="code github"><i
+          class="icon fab fa-github"></i>Code</a>
+    </nav>
+    <div class="authors" aria-label="authors">
+      <span><a href="https://itailang.github.io/">Itai Lang</a><sup>*</sup></span>
+      <span><a href="https://scholar.google.com/citations?user=i10yLmIAAAAJ&hl=zh-CN">Dongwei Lyu</a><sup>*</sup></span>
+      <span><a href="https://ddecatur.github.io/">Dale Decatur</a></span>
+      <span><a href="https://people.cs.uchicago.edu/~ranahanocka/">Rana Hanocka</a></span>
+    </div>
+    <div class="affiliations" aria-label="affiliations">University of Chicago</div>
+    <div class="note" aria-label="note"><sup>*</sup>Equal contribution</div>
+  </section>
+  
+  <!-- Floating mini-TOC pinned to the right edge on wide screens. JS
+       marks the entry corresponding to the current section as active. -->
+  <aside class="side-toc" aria-label="Page sections" data-toc>
+    <a href="#abstract" data-section="abstract">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Abstract</span>
+    </a>
+    <a href="#key-idea" data-section="key-idea">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Key Idea</span>
+    </a>
+    <a href="#method" data-section="method">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Method</span>
+    </a>
+    <a href="#gallery" data-section="gallery">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Gallery</span>
+    </a>
+    <a href="#robustness" data-section="robustness">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Robustness</span>
+    </a>
+    <a href="#applications" data-section="applications">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Applications</span>
+    </a>
+    <a href="#comparison" data-section="comparison">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Comparison</span>
+    </a>
+    <a href="#bibtex" data-section="bibtex">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">BibTeX</span>
+    </a>
+  </aside>
+  
+  <section class="teaser" aria-label="teaser">
+    <div class="imgsflex">
+      <figure class="blcent vidloadsync">
+        <video class="srcshape" style="margin: 0 0" autoplay
+          poster="assets/teaser/teaser.png" preload muted loop playsinline
+          aria-label="image-shape correspondence teaset examples">
+          <source src="assets/teaser/teaser.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+    <p class="graybox">
+      <em>Best Segmentation Buddies</em> computes segment-to-segment correspondence across <em>different modalities</em>
+      (image-to-shape) and across <em>different domains</em>. Given an image and a segmentation region, our method finds
+      the corresponding segmentation on a 3D mesh. The image can depict an object similar to the shape (the camel), a part
+      with different geometry (the hammer's head), or even an object from a different domain (the owl and the airplane).
+    </p>
+  </section>
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p class="graybox">
+      Finding correspondences is a fundamental and extensively researched problem in computer vision and graphics.
+      In this work, we examine the underexplored task of estimating segmentation-to-segmentation correspondence
+      between images in the wild and untextured 3D shapes. This task is highly challenging due to substantial
+      differences in appearance, geometry, and viewpoint. Our approach bridges the cross-modality gap by linking
+      pixels in the image segment to vertices in the corresponding semantic part of the 3D shape. <br>
+      <br>
+      To achieve this, we first distill deep visual features from a 2D vision model onto the 3D shape surface,
+      allowing for the computation of feature similarity between image pixels and shape vertices. Then, we
+      identify <em>Best Segmentation Buddies</em>, vertices whose most similar image pixel lies within the
+      image segmentation region, enabling the reliable discovery of vertices in semantically corresponding
+      shape parts. Finally, we leverage distilled 3D features from the 2D image segmentation model to segment
+      the shape directly in 3D, bootstrapping the correspondence process. We demonstrate the generality and
+      robustness of our approach across a wide range of image-shape pairs, showcasing accurate and semantically
+      meaningful correspondences.
+    </p>
+  </section>
+  <section id="key-idea">
+    <h2>Key Idea</h2>
+    <div class="imgsflex">
+      <figure class="halfwidthflex" style="width: calc(0.94 * var(--halfwidthflex-w))">
+        <img
+          src="assets/key_idea/best_segmentation_buddies.jpg"
+          alt="pixel to vertex and vertex to pixel similarity visualization.">
+        <figcaption class="caption">Best Segmentation Buddies</figcaption>
+      </figure>
+      <figure class="halfwidthflex" style="width: calc(0.94 * var(--halfwidthflex-w))">
+        <img
+          src="assets/key_idea/matching_properties.jpg"
+          alt="best segmentation buddies matching properties.">
+        <figcaption class="caption">Matching properties</figcaption>
+    </div>
+    <p class="graybox">
+      <b>Best Segmentation Buddies.</b> Due to the modality difference, pixels and vertices
+      are not mutual nearest neighbors (a.k.a, best buddies). Thus, for the clicked pixel, we search the best
+      segmentation buddy - a vertex whose nearest neighbor pixel falls within the segmentation region of the
+      original pixel click and yields a segmentation mask with the highest overlap with the click's mask.<br>
+      <br>
+      <b>Matching properties.</b> When a correspondence between an image region and a mesh part exists
+      (the guitar's head and neck), the matched vertex will map back to a segment (bottom row) that is
+      almost identical to the original segmentation (top row). However, if a match does not exist, such
+      regions will differ substantially (the guitar's volume knob and body), implying the absence of
+      correspondence. We discover this property and exploit it to enable successful image-shape matching
+      via our Best Segmentation Buddies mechanism.
+    </p>
+  </section>
+  <section id="method">
+    <h2>Method</h2>
+    <img class="halfwidthflex blcent" src="assets/method.jpg"
+      alt="method overview diagram.">
+    <p class="graybox">
+      <b>Method overview.</b> Our method finds segmentation-to-segmentation correspondence between an input image
+      (<span class="text-green">bottom left</span>) and a 3D mesh (<span class="text-green">top right</span>).
+      We connect pixels to mesh vertices by leveraging pretrained 2D foundation models for
+      <span class="text-blue">segmentation</span> <span class="step-circle">1</span> and
+      <span class="text-yellow">feature similarity</span> <span class="step-circle">2</span>. We distill the
+      pretrained vision features to the mesh surface <span class="step-circle">3</span> to perform the
+      cross-modality matching <span class="step-circle">4</span>, <span class="step-circle">5</span>, and leverage
+      a distilled segmentation model <span class="step-circle">6</span> to obtain the corresponding part in 3D.
+    </p>
+  </section>
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <img class="fullwidth blcent" src="assets/gallery.jpg"
+      alt="gallery of image-shape correspondence results, where the region in the image and the shape are marked with the same color. The matched parts from left to right: first row: flame, head, ear, seat; Second row: tail, tip, beak, fist.">
+    <p class="graybox">
+      <b>Correspondence for various image and shape pairs.</b> Best Segmentation Buddies can match semantic parts when the object in the image
+      and the 3D mesh are from different domains, where the corresponding elements differ substantially in appearance, shape, and size.
+    </p>
+  </section>
+  <section id="robustness">
+    <h2>Robustness</h2>
+    <div class="imgsflex">
+      <figure class="halfwidthflex" style="width: calc(1.00 * var(--halfwidthflex-w))">
+        <img
+          src="assets/robustness/different_pose.jpg"
+          alt="correspondence between images and shapes with different poses.">
+        <figcaption class="caption">Different poses</figcaption>
+      </figure>
+      <figure class="halfwidthflex" style="width: calc(0.78 * var(--halfwidthflex-w))">
+        <img
+          src="assets/robustness/different_texture.jpg"
+          alt="correspondence between images and shapes with different texturea.">
+        <figcaption class="caption">Different textures</figcaption>
+      </figure>
+    </div>
+    <p class="graybox">
+      Best Segmentation Buddies finds correspondences between the image and the shape when the object's pose
+      in each modality differs substantially.<br>
+      <br>
+      Our method can also work with textured shapes. It successfully matches image and shape regions despite
+      variations in their appearance and texture.
+    </p>
+  </section>
+  <section id="applications">
+    <h2>Applications</h2>
+    <div class="imgsflex">
+      <figure class="halfwidthflex" style="width: calc(0.94 * var(--halfwidthflex-w))">
+        <img
+          src="assets/applications/image_to_image_correspondence.jpg"
+          alt="correspondence between image regions.">
+        <figcaption class="caption">Cross-domain image-to-image correspondence</figcaption>
+      </figure>
+      <figure class="halfwidthflex" style="width: calc(0.94 * var(--halfwidthflex-w))">
+        <img
+          src="assets/applications/local_texturing.jpg"
+          alt="texturing of a local shape region guided by the image.">
+        <figcaption class="caption">Local texturing</figcaption>
+      </figure>
+    </div>
+    <p class="graybox">
+      <b>Cross-domain image-to-image correspondence.</b> By matching regions from different images to the same shape
+      part via Best Segmentation Buddies, we indirectly obtain correspondence between different domain images (the
+      <em>sea turtle shell</em> and the <em>ski back protector</em>).<br>
+      <br>
+      <b>Local texturing.</b> Our image-to-shape matching enables automatic, localized texturing of the shape driven by
+      the texture in the image.
+    </p>
+  </section>
+  <section id="comparison">
+    <h2>Comparison</h2>
+    <p class="comparison-instruction">🖱️ To interact with the 3D models, <em>Scroll</em> to zoom, hold the <em>Left Click + drag</em> to rotate, and hold the <em>Right Click + drag </em> to translate.</p>
+    <div class="grid-container-4">
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <img src="assets/comparison/narwhal.png" alt="a narwhal image">
+        </div>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/unicorn_nbb.glb" alt="Unicorn NBB result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/unicorn_dift.glb" alt="Unicorn DIFT result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/unicorn_bsb.glb" alt="Unicorn BSB result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+      </div>
+    </div>
+    <div class="grid-container-4">
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <img src="assets/comparison/robotic_arm.png" alt="a robotic arm image">
+        </div>
+        <p class="comparison-label">Input Image</p>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/lamp_nbb.glb" alt="NBB result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+        <p class="comparison-label">Neural Best Buddies</p>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/lamp_dift.glb" alt="DIFT result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+        <p class="comparison-label">Diffusion Image Features</p>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-content">
+          <model-viewer src="assets/comparison/lamp_bsb.glb" alt="BSB result" auto-rotate camera-orbit="180deg 75deg auto" shadow-intensity="1.5" exposure="0.5" camera-controls enable-pan rotation-per-second="60deg" disable-tap></model-viewer>
+        </div>
+        <p class="comparison-label">Best Segmentation Buddies (ours)</p>
+      </div>
+    </div>
+    <p class="graybox">
+      We adapt baselines to solve our task from existing image-based matching techniques
+      (<a href="https://kfiraberman.github.io/neural_best_buddies/" target="_blank" rel="noopener noreferrer">Neural Best Buddies</a> and
+      <a href="https://diffusionfeatures.github.io/" target="_blank" rel="noopener noreferrer">Diffusion Image Features</a>).
+      These methods produce incorrect correspondences, whereas Best Segmentation Buddies
+      reliably selects the shape part that semantically matches the image segment.
+    </p>
+  </section>
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <div class="bibtex-wrapper">
+      <button type="button" class="bibtex-copy-btn" data-target="bibtex-code"
+        aria-label="Copy BibTeX entry to clipboard">
+        <span class="bibtex-copy-icon" aria-hidden="true">
+          <i class="far fa-copy"></i>
+        </span>
+        <span class="bibtex-copy-text">Copy</span>
+      </button>
+      <pre class="graybox" id="bibtex-code">@InProceedings{lang2026bsb,
+  author    = {Lang, Itai and Lyu, Dongwei and Decatur, Dale and Hanocka, Rana},
+  title     = {{Best Segmentation Buddies for Image-Shape Correspondence}},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month     = {June},
+  year      = {2026}
+}</pre>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>
+      This webpage was adapted from the <a href="https://threedle.github.io/geometry-in-style/" target="_blank" rel="noopener noreferrer">Geometry in Style</a>
+      webpage. We thank <a href="https://people.cs.uchicago.edu/~namanh/" target="_blank" rel="noopener noreferrer">Nam Anh Dinh</a> for creating this template.
+    </p>
+  </footer>
+
+  <script>
+    // upon load, restart and sync the other video in the pair
+    const vidloadsyncers = document.getElementsByClassName("vidloadsync");
+    for (const elem of vidloadsyncers) {
+      const srcshapeVid = elem.getElementsByClassName("srcshape").item(0);
+      const rsltshapeVid = elem.getElementsByClassName("rsltshape").item(0);
+      srcshapeVid?.addEventListener("loadeddata", e => {
+        if (rsltshapeVid) {
+          rsltshapeVid.currentTime = 0;
+        }
+      });
+      rsltshapeVid?.addEventListener("loadeddata", e => {
+        if (srcshapeVid) {
+          srcshapeVid.currentTime = 0;
+        }
+      });
+    }
+  </script>
+
+  <script>
+    if (typeof BeforeAfter !== 'undefined') {
+      new BeforeAfter({ id: '#example1' });
+    }
+
+    // ---- Heading anchor links (deep-link helpers) -----------------
+    // For every <section id="..."> with an <h2>,
+    // inject a small "#" link before the heading text so visitors
+    // can hover to reveal and copy a permalink to that section.
+    (function () {
+        var sections = document.querySelectorAll('section[id] h2');
+        sections.forEach(function (h) {
+            var section = h.closest('section[id]');
+            if (!section) return;
+            if (h.querySelector('.heading-anchor')) return;
+            var a = document.createElement('a');
+            a.className = 'heading-anchor';
+            a.href = '#' + section.id;
+            a.setAttribute('aria-label', 'Permalink to ' + h.textContent.trim());
+            a.textContent = '#';
+            h.insertBefore(a, h.firstChild);
+        });
+    })();
+
+    // ---- Side TOC + active section highlight ----------------------
+    // One IntersectionObserver tracks every <section id>; the section
+    // with the largest visible area "wins" and its corresponding
+    // entry in the side TOC gets .is-active.
+    (function () {
+        var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+        var tocLinks = document.querySelectorAll('.side-toc a[data-section]');
+        if (!sections.length) return;
+
+        var visibility = Object.create(null);
+
+        function setActive(id) {
+            tocLinks.forEach(function (a) {
+                a.classList.toggle('is-active', a.dataset.section === id);
+            });
+        }
+
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    visibility[entry.target.id] = entry.intersectionRatio;
+                });
+                var bestId = null;
+                var bestRatio = 0;
+                Object.keys(visibility).forEach(function (id) {
+                    if (visibility[id] > bestRatio) {
+                        bestRatio = visibility[id];
+                        bestId = id;
+                    }
+                });
+                if (bestId && bestRatio > 0) setActive(bestId);
+            }, {
+                // Treat the middle 60% of the viewport as the
+                // "reading area"; whichever section overlaps it most
+                // becomes the active one.
+                rootMargin: '-20% 0px -20% 0px',
+                threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+            });
+            sections.forEach(function (s) { obs.observe(s); });
+        }
+
+        // Reveal the side TOC once the user has scrolled past the intro.
+        var toc = document.querySelector('[data-toc]');
+        if (toc) {
+            var introH = (document.querySelector('.intro') || {}).offsetHeight || 400;
+            var onScroll = function () {
+                if (window.pageYOffset > introH * 0.6) toc.classList.add('is-visible');
+                else toc.classList.remove('is-visible');
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+    })();
+  </script>
+  
+  <script>
+    // ---- BibTeX copy-to-clipboard ---------------------------------
+    (function () {
+      var btn = document.querySelector('.bibtex-copy-btn');
+      if (!btn) return;
+      var resetTimer = null;
+      btn.addEventListener('click', function () {
+        var target = document.getElementById(btn.dataset.target);
+        if (!target) return;
+        var text = target.innerText;
+        var done = function (ok) {
+          btn.classList.remove('is-success', 'is-error');
+          btn.classList.add(ok ? 'is-success' : 'is-error');
+          var label = btn.querySelector('.bibtex-copy-text');
+          if (label) label.textContent = ok ? 'Copied!' : 'Copy failed';
+          if (resetTimer) clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () {
+            btn.classList.remove('is-success', 'is-error');
+            if (label) label.textContent = 'Copy';
+          }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { done(true); },
+            function () { done(false); });
+        } else {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            done(ok);
+          } catch (err) {
+            done(false);
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
