@@ -647,7 +647,7 @@ i.med-nbsp:before {
 }
 
 pre {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 @media (min-width: 100px) {
