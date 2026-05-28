@@ -8,7 +8,7 @@
 </span> <br>
 
 <br>
-<a href="https://threedle.github.io/bsb/"><img src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Project%20Page&up_color=lightgreen&up_message=online&url=https%3A//threedle.github.io/bsb/" height=22></a> <a href="https://threedle.github.io/bsb/"><img src="https://img.shields.io/badge/Conference-CVPR%20%202026-61d5fe" height=22></a> <a href="https://arxiv.org/abs/2605.18193"><img src="https://img.shields.io/badge/arXiv-BSB-ff6961.svg" height=22></a>
+<a href="https://threedle.github.io/bsb/"><img src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Project%20Page&up_color=lightgreen&up_message=online&url=https%3A//threedle.github.io/bsb/" height=22></a> <a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Lang_Best_Segmentation_Buddies_for_Image-Shape_Correspondence_CVPR_2026_paper.pdf"><img src="https://img.shields.io/badge/Conference-CVPR%20%202026-61d5fe" height=22></a> <a href="https://arxiv.org/abs/2605.18193"><img src="https://img.shields.io/badge/arXiv-BSB-ff6961.svg" height=22></a>
 
 <br> ![teaser](./media/teaser.png)
 
@@ -148,6 +148,7 @@ If you find our work useful for your research, please consider citing:
   author    = {Lang, Itai and Lyu, Dongwei and Decatur, Dale and Hanocka, Rana},
   title     = {{Best Segmentation Buddies for Image-Shape Correspondence}},
   booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {20499-20510},
   month     = {June},
   year      = {2026}
 }
